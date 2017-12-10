@@ -1,6 +1,6 @@
 import {Express, Router, Request, Response, NextFunction} from "express";
 import { APIRoute } from "./api-route";
-import { BashoManager } from "../managers/basho-manager";
+import { BashoManager } from "../../managers/basho-manager";
 
 export class APIBasho extends APIRoute {
     constructor(app:Express) {
@@ -48,7 +48,7 @@ export class APIBasho extends APIRoute {
                 basho.edit(req.body.name, req.body.year);
                 res.status(200).send({basho: basho.serializeBrief()});
             } catch (e) {
-                res.status(400).send({error: e});
+                res.status(400).send({error: e.message});
             }
         }
     }

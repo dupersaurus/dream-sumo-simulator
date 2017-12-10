@@ -24,7 +24,8 @@ dotenv.config({ path: ".env.example" });
  * API keys and Passport configuration.
  */
 //import * as passportConfig from "./config/passport";
-import { APIBasho } from "./routes/api-basho";
+import { APIBasho } from "./routes/api/basho";
+import { BanzukeAPI } from "./routes/api/banzuke";
 
 /**
  * Create Express server.
@@ -73,6 +74,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }));
 
 const bashoAPI = new APIBasho(app);
+const banzukeAPI = new BanzukeAPI(app);
 
 /**
  * Error Handler. Provides full stack - remove for production

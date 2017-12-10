@@ -1,5 +1,6 @@
 import { Serializable } from "./serializable";
 import { Banzuke } from "./banzuke";
+import {BankuzeManager} from "../managers/banzuke-manager"
 
 export enum HonbashoName {
     Hatsu,
@@ -16,7 +17,7 @@ export class Honbasho implements Serializable {
     private _name: HonbashoName;
     private _year: number;
 
-    private _banzuke: Banzuke;
+    private _banzuke: number;
 
     public get id(): number {
         return this._id;
@@ -35,7 +36,7 @@ export class Honbasho implements Serializable {
         this._id = id;
         this._name = name;
         this._year = year;
-        this._banzuke = new Banzuke();
+        this._banzuke = 0;
     }
 
     public edit(name: number, year: number) {
@@ -50,11 +51,13 @@ export class Honbasho implements Serializable {
     }
 
     public serialize(): object {
+        const banzuke = BankuzeManager.getBanzuke(this._banzuke);
+
         return {
             id: this._id,
             name: this._name,
             year: this._year,
-            banzuke: this._banzuke.serialize()
+            banzuke: banzuke ? banzuke.serialize() : null
         };
     }
 
@@ -62,7 +65,8 @@ export class Honbasho implements Serializable {
         return {
             id: this._id,
             name: this._name,
-            year: this._year
+            year: this._year,
+            banzukeId: this._banzuke
         };
     }
 }

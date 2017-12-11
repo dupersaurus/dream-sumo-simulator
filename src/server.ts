@@ -26,6 +26,7 @@ dotenv.config({ path: ".env.example" });
 //import * as passportConfig from "./config/passport";
 import { APIBasho } from "./routes/api/basho";
 import { BanzukeAPI } from "./routes/api/banzuke";
+import { RikishiAPI } from "./routes/api/rikishi";
 
 /**
  * Create Express server.
@@ -75,6 +76,7 @@ app.use(express.static(path.join(__dirname, "public"), { maxAge: 31557600000 }))
 
 const bashoAPI = new APIBasho(app);
 const banzukeAPI = new BanzukeAPI(app);
+const rikishiAPI = new RikishiAPI(app);
 
 /**
  * Error Handler. Provides full stack - remove for production

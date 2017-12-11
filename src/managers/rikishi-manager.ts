@@ -1,4 +1,5 @@
 import {Rikishi} from "../data/rikishi"
+import { forEach } from "async";
 
 export class RikishiManager {
     private static _instance: RikishiManager;
@@ -23,6 +24,17 @@ export class RikishiManager {
         this._rikishi.set(5, new Rikishi(5, "Endo"));
     }
 
+    public static list(): Rikishi[] {
+        return this.instance.list();
+    }
+
+    private list(): Rikishi[] {
+        const riks: Rikishi[] = [];
+        this._rikishi.forEach((rik, key, map) => riks.push(rik));
+
+        return riks;
+    }
+
     public static get(id: number): Rikishi {
         return this.instance.get(id);
     }
@@ -33,5 +45,42 @@ export class RikishiManager {
         } else {
             return null;
         }
+    }
+
+    public static findByName(name: string): Rikishi[] {
+        return this.instance.findByName(name);
+    }
+
+    private findByName(name: string): Rikishi[] {
+        const riks: Rikishi[] = [];
+
+        this._rikishi.forEach(element => {
+            if (element.name.toLowerCase().includes(name.toLowerCase())) {
+                riks.push(element);
+            }
+        });
+
+        riks.sort((a, b) => {
+            if (a.name < b.name) {
+                return -1;
+            } else if (a.name > b.name) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+
+        return riks;
+    }
+
+    public static add(name: string): Rikishi {
+        return this.instance.add(name);
+    }
+
+    private add(name: string): Rikishi {
+        const rik = new Rikishi(this._rikishi.size, name);
+        this._rikishi.set(this._rikishi.size, rik);
+
+        return rik;
     }
 }

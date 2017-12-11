@@ -1,17 +1,13 @@
 import {Rikishi} from "./rikishi";
-import { Torikumi } from "./torikumi";
 import { Serializable } from "./serializable";
 import {RikishiManager} from "../managers/rikishi-manager"
 
 export class Banzuke implements Serializable {
 
-    private _id: number;
+    private _id: number = 0;
 
     /** List of rikishi in order on banzuke */
     private _rikishi: number[] = [];
-
-    /** Day schedules */
-    private _schedule: Torikumi[] = [];
 
     private _numYokozuna: number = 0;
     private _numOzeki: number = 0;
@@ -75,7 +71,6 @@ export class Banzuke implements Serializable {
         const obj = {
                     id: this._id,
                     rikishi: new Array(),
-                    schedule: new Array(),
                     yokozuna: this._numYokozuna,
                     ozeki: this._numOzeki,
                     sekiwake: this._numSekiwake,
@@ -88,10 +83,6 @@ export class Banzuke implements Serializable {
             if (rik) {
                 obj.rikishi.push(rik.serialize());
             }
-        });
-
-        this._schedule.forEach(element => {
-            obj.schedule.push(element.serialize());
         });
 
         return obj;
